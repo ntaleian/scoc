@@ -100,7 +100,7 @@ class Pages_model extends CI_Model {
 	
 	function get_schedules()
 	{
-	    $query = $this->db->query("SELECT s.vote, count(s.id) AS NoOfEmps, SUM(s.amount) AS TotalSum, s.payrolldate, s.recon_status, s.status, d.description FROM `scoc_schedules` s LEFT JOIN scoc_departments d ON s.vote=d.code GROUP BY vote, payrolldate, recon_status");
+	    $query = $this->db->query("SELECT s.vote, count(s.id) AS NoOfEmps, SUM(s.amount) AS TotalSum, s.payrolldate, s.recon_status, s.status, d.description FROM `scoc_schedules` s LEFT JOIN scoc_departments d ON s.vote=d.code WHERE s.status='1' GROUP BY vote, payrolldate, recon_status");
 	    
 	    if($query->num_rows() > 0)
 	    {
@@ -229,6 +229,94 @@ class Pages_model extends CI_Model {
 	    {
 	        return false;
 	    }
+	}
+
+	function get_reconciled()
+	{
+		$query = $this->db->query("SELECT s.vote, count(s.id) AS NoOfEmps, SUM(s.amount) AS TotalSum, s.payrolldate, s.recon_status, s.status, d.description FROM `scoc_schedules` s LEFT JOIN scoc_departments d ON s.vote=d.code WHERE s.status='2' GROUP BY vote, payrolldate, recon_status");
+	    
+	    if($query->num_rows() > 0)
+	    {
+	        return $query->result_array();
+	    }
+	    else
+	    {
+	        return false;
+	    }
+	}
+
+	function get_popup_recon_reports($vote, $period)
+	{
+		$period2 = date('Y-m-d', strtotime($period));
+
+		$query = $this->db->query("SELECT s.empno, s.vote, s.payrolldate, s.dedcode, s.amount, d.description, c.companyname FROM `scoc_payments` s LEFT JOIN scoc_departments d ON s.vote=d.code LEFT JOIN scoc_companies c ON s.dedcode=c.deductiontype WHERE s.vote='$vote' AND s.payrolldate='$period2'");
+	    
+	    if($query->num_rows() > 0)
+	    {
+	        return $query->result_array();
+	    }
+	    else
+	    {
+	        return false;
+	    }
+	}
+
+	function get_dash_figures()
+	{
+		$get = $this->db->query("SELECT MAX(payrolldate) AS ExpDate, (SELECT SUM(amount) FROM scoc_schedules WHERE status='1') AS UnRecon, (SELECT SUM(amount) FROM scoc_schedules WHERE status='2') AS Recon FROM scoc_expectation");
+
+		if($get->num_rows() > 0)
+		{
+			return $get->row_array();
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	function get_user_details($uid)
+	{
+		$get = $this->db->query("SELECT * FROM scoc_users WHERE id='$uid'");
+
+		if($get->num_rows() > 0)
+		{
+			return $get->row_array();
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	function update_user()
+	{
+		$uid = $_POST['uid'];		
+		$name = $_POST['name'];
+		$pwd = "";
+
+		if(!empty($_POST['password']))
+		{
+			$password = $_POST['scoc_password'];
+			$cpassword = $_POST['scoc_password_conf'];
+
+			if($password == $cpassword)
+			{
+				$pwd = ", '".md5($password)."' ";
+			}
+
+		}
+
+		$update = $this->db->query("UPDATE scoc_users SET name=".$this->db->escape($name)." ".$pwd." WHERE id='$uid' ");
+
+		if($update)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 }

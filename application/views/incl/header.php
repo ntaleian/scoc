@@ -17,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="http://bx-code-admin.websitedesignmarketingagency.com/images/favicon.ico">
+    <link rel="icon" href="<?php echo base_url(); ?>assets/images/favicon.ico">
 
     <title>PCA SCOC System</title>
     
@@ -35,6 +35,9 @@
 	
     <!--alerts CSS -->
     <link href="<?php echo base_url(); ?>assets/vendor_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
+    
+    <!-- toast CSS -->
+    <link href="<?php echo base_url(); ?>assets/vendor_components/jquery-toast-plugin-master/src/jquery.toast.css" rel="stylesheet">	
 	
 	<!-- Bx-code admin skins -->
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/skins/_all-skins.css">
@@ -109,7 +112,7 @@
                 <div class="row no-gutters">
 				<div role="separator" class="divider col-12"></div>
 				  <div class="col-12 text-left">
-                    <a href="#"><i class="ti-settings"></i> Account</a>
+                    <a href="<?php echo base_url(); ?>pages/profile"><i class="ti-settings"></i> Account</a>
                   </div>
 				<div role="separator" class="divider col-12"></div>
 				  <div class="col-12 text-left">

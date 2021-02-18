@@ -5,70 +5,47 @@
     <section class="content">	
 		<div class="container">	
 			<div class="row">
-				<div class="col-xl-3 col-md-6 col-12">
+				<div class="col-xl-4 col-md-6 col-12">
 					<div class="small-box pull-up bg-info">
 						<div class="inner">
-						  <h3>2064</h3>
-						  <p>Total Tickets</p>
+						  <h3><?php echo date('M-Y', strtotime($dash['ExpDate'])); ?></h3>
+						  <p>Latest Expectation</p>
 						</div>
 						<div class="icon">
 						  <i class="mdi mdi-ticket-confirmation"></i>
 						</div>
-						<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
+						<a href="<?php echo base_url() ?>pages/view_exp" class="small-box-footer">View Expectation <i class="fa fa-arrow-right"></i></a>
 				    </div>
 				</div>
-				<div class="col-xl-3 col-md-6 col-12">
+				<div class="col-xl-4 col-md-6 col-12">
 					<div class="small-box pull-up bg-warning">
 						<div class="inner">
-						  <h3>1738</h3>
-						  <p>Responded</p>
+						  <h3><?php echo number_format($dash['UnRecon']); ?></h3>
+						  <p>Total Unreconciled</p>
 						</div>
 						<div class="icon">
 						  <i class="mdi mdi-message-reply-text"></i>
 						</div>
-						<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
+						<a href="#" class="small-box-footer">View Uploaded Schedules <i class="fa fa-arrow-right"></i></a>
 				    </div>
 				</div>
-				<div class="col-xl-3 col-md-6 col-12">
+				<div class="col-xl-4 col-md-6 col-12">
 					<div class="small-box pull-up bg-success">
 						<div class="inner">
-						  <h3>1100</h3>
-						  <p>Resolve</p>
+						  <h3><?php echo number_format($dash['Recon']); ?></h3>
+						  <p>Total Reconciled</p>
 						</div>
 						<div class="icon">
 						  <i class="mdi mdi-thumb-up-outline"></i>
 						</div>
 						<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
 				    </div>
-				</div>
-				<div class="col-xl-3 col-md-6 col-12">
-					<div class="small-box pull-up bg-danger">
-						<div class="inner">
-						  <h3>964</h3>
-						  <p>Pending</p>
-						</div>
-						<div class="icon">
-						  <i class="mdi mdi-ticket "></i>
-						</div>
-						<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
-				    </div>
 				</div>	
 				
-				<div class="col-xl-4 col-12">
+				<div class="col-xl-12 col-12">
 					<div class="box">
 						<div class="box-header">
-							<h4 class="box-title">Tickets share per category</h4>
-						</div>
-						<div class="box-body p-0">
-							<div id="donut"></div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-xl-8 col-12">
-					<div class="box">
-						<div class="box-header">
-							<h4 class="box-title">Ticket Overview</h4>
+							<h4 class="box-title"><?php echo date('Y')." Overview"; ?></h4>
 						</div>
 						<div class="box-body p-0">
 							<div id="ticketoverview"></div>

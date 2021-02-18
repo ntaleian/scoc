@@ -63,6 +63,10 @@
 		
 	<!-- Bx-code admin App -->
 	<script src="<?php echo base_url(); ?>assets/js/template.js"></script>
+
+  <!-- toast -->
+  <script src="<?php echo base_url(); ?>assets/vendor_components/jquery-toast-plugin-master/src/jquery.toast.js"></script>
+    <script src="<?php echo base_url(); ?>js/pages/toastr.js"></script>
 	
 	<!-- Bx-code admin dashboard demo (This is only for demo purposes) -->
 	<script src="<?php echo base_url(); ?>assets/js/pages/dashboard-2.js"></script>
@@ -377,6 +381,44 @@ var interval = setInterval(function() {
               $('[data-toggle="tooltip"]').tooltip()
             })
         </script>
+
+        <script type="text/javascript">
+          $(document).ready(function(){
+
+            var success_msg = "<?php echo $this->session->flashdata('succ_msg'); ?>";
+
+            var error_msg = "<?php echo $this->session->flashdata('err_msg'); ?>";
+
+            if($success_msg.length > 0)
+            {
+              $.toast({
+                  heading: 'Success!',
+                  text: success_msg,
+                  position: 'top-right',
+                  loaderBg: '#ff6849',
+                  icon: 'success',
+                  hideAfter: 3500,
+                  stack: 6
+              });
+            }
+            else if(error_msg.length > 0)
+            {
+              $.toast({
+                  heading: 'Error!',
+                  text: error_msg,
+                  position: 'top-right',
+                  loaderBg: '#ff6849',
+                  icon: 'error',
+                  hideAfter: 3500,
+                  stack: 6
+              });
+            }
+
+              
+          });
+        </script>
+
+        
 
 </body>
 

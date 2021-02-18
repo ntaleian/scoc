@@ -15,12 +15,13 @@ class Pages extends CI_Controller {
 
 	public function index()
 	{
-		// $data['emps'] = $this->pages->get_emps();
+		$data['dash'] = $this->pages->get_dash_figures();
+
 		$data['active_link'] = "home";
 
 		$this->load->view('incl/header');
 		$this->load->view('incl/sidebar', $data);
-		$this->load->view('incl/home');
+		$this->load->view('incl/home', $data);
 		$this->load->view('incl/footer');
 	}
 
@@ -297,6 +298,16 @@ $perc = ($c/$tottal)*100;
 	    $this->load->view('incl/popup_exp', $data);
 	}
 
+	function popup_recon()
+	{
+		$vote = $_GET['vote'];
+	    $period = $_GET['period'];
+	    
+	    $data['results'] = $this->pages->get_popup_recon_reports($vote, $period);
+	    
+	    $this->load->view('incl/popup_recon', $data);
+	}
+
 	function login()
 	{
 		if(isset($_POST['login']))
@@ -359,6 +370,54 @@ $perc = ($c/$tottal)*100;
 		$this->load->view('incl/header');
 		$this->load->view('incl/sidebar', $data);
 		$this->load->view('pages/add_user', $data);
+		$this->load->view('incl/footer');
+	}
+
+	function profile()
+	{
+		if(isset($_POST['updateuser']))
+		{
+			$update = $this->pages->update_user();
+
+			if($update)
+			{
+				$this->session->set_flashdata('succ_msg', "User details updated successfully");
+			}
+			else
+			{
+				$this->session->set_flashdata('err_msg', "User details NOT updated successfully");				
+			}
+		}
+
+		$uid = $this->session->userdata('scoc_user')['id'];
+
+		$data['uid'] = $uid;
+
+		$data['user'] = $this->pages->get_user_details($uid);
+
+		$data['page_title'] = "User Account";
+		$data['section'] = "Management";
+		$data['active_link'] = "profile";
+
+		$this->load->view('incl/header');
+		$this->load->view('incl/sidebar', $data);
+		$this->load->view('pages/profile', $data);
+		$this->load->view('incl/footer');
+	}
+
+	function view_reconciled()
+	{
+	    $data['schedules'] = $this->pages->get_reconciled();
+	    
+// 		$data['votes'] = $this->pages->get_votes();
+
+		$data['page_title'] = "View Reconciled Schedules";
+		$data['section'] = "Payment Schedules";
+		$data['active_link'] = "view_rs";
+
+		$this->load->view('incl/header');
+		$this->load->view('incl/sidebar', $data);
+		$this->load->view('pages/view_reconciled', $data);
 		$this->load->view('incl/footer');
 	}
 	
