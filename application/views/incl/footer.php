@@ -85,7 +85,7 @@
    event.preventDefault();
    loop();
    $.ajax({
-    url:"http://certsoftwares.net/scoc/pages/saveupload_exp",
+    url:"<?php echo base_url(); ?>pages/saveupload_exp",
     method:"POST",
     data: new FormData(this),
     dataType:"json",
@@ -124,7 +124,7 @@
  function loop(){
 var interval = setInterval(function() { 
     
-    var file = "http://certsoftwares.net/scoc/myfile.txt"
+    var file = "<?php echo base_url(); ?>myfile.txt"
     var rawFile = new XMLHttpRequest();
     rawFile.open("GET", file, false);
     rawFile.onreadystatechange = function ()
@@ -161,7 +161,7 @@ var interval = setInterval(function() {
    event.preventDefault();
    loop();
    $.ajax({
-    url:"http://certsoftwares.net/scoc/pages/saveupload_breakdown",
+    url:"<?php echo base_url(); ?>pages/saveupload_breakdown",
     method:"POST",
     data: new FormData(this),
     dataType:"json",
@@ -200,7 +200,7 @@ var interval = setInterval(function() {
  function loop(){
 var interval = setInterval(function() { 
     
-    var file = "http://certsoftwares.net/scoc/myfile2.txt"
+    var file = "<?php echo base_url(); ?>myfile2.txt"
     var rawFile = new XMLHttpRequest();
     rawFile.open("GET", file, false);
     rawFile.onreadystatechange = function ()
@@ -237,7 +237,7 @@ var interval = setInterval(function() {
    event.preventDefault();
    loop();
    $.ajax({
-    url:"http://certsoftwares.net/scoc/pages/saveupload_schedules",
+    url:"<?php echo base_url(); ?>pages/saveupload_schedules",
     method:"POST",
     data: new FormData(this),
     dataType:"json",
@@ -276,7 +276,7 @@ var interval = setInterval(function() {
  function loop(){
 var interval = setInterval(function() { 
     
-    var file = "http://certsoftwares.net/scoc/myfile3.txt"
+    var file = "<?php echo base_url(); ?>myfile3.txt"
     var rawFile = new XMLHttpRequest();
     rawFile.open("GET", file, false);
     rawFile.onreadystatechange = function ()
