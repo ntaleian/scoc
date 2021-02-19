@@ -172,12 +172,33 @@ $perc = ($c/$tottal)*100;
 	{
 	    if(isset($_GET['viewexp']))
 	    {
+	    	$data['year'] = $_GET['year'];
+	    	$data['month'] = $_GET['month'];
 	        $data['period'] = $_GET['year']."-".$_GET['month'];
 	        $data['period'] = date('Y-m', strtotime($data['period']));
 	        
-	        $data['votes'] = $this->pages->get_votes();
-	        $data['results'] = true;
+	        // $data['votes'] = $this->pages->get_votes();
+	        $data['results'] = $this->pages->get_exp_vote($data['period']);
+	        // $data['results'] = true;
 	       
+	    }
+	    else if(isset($_GET['downloadexp']))
+	    {
+	    	$data['period'] = $_GET['year']."-".$_GET['month'];
+
+	    	$csv_data = $this->pages->fetch_data($data['period']);
+
+	    	// file creation 
+		     $file = fopen('php://output', 'w');
+		 
+		     $header = array("Employeeno", "Vote", "Votename", "Amount", "PayrollDate"); 
+		     fputcsv($file, $header);
+		     foreach ($csv_data->result_array() as $key => $value)
+		     { 
+		       fputcsv($file, $value); 
+		     }
+		     fclose($file); 
+		     exit; 
 	    }
 	    else
 	    {

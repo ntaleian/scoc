@@ -12,7 +12,7 @@
 						  <p>Latest Expectation</p>
 						</div>
 						<div class="icon">
-						  <i class="mdi mdi-ticket-confirmation"></i>
+						  <i class="mdi mdi-folder-download"></i>
 						</div>
 						<a href="<?php echo base_url() ?>pages/view_exp" class="small-box-footer">View Expectation <i class="fa fa-arrow-right"></i></a>
 				    </div>
@@ -24,7 +24,7 @@
 						  <p>Total Unreconciled</p>
 						</div>
 						<div class="icon">
-						  <i class="mdi mdi-message-reply-text"></i>
+						  <i class="mdi mdi-close-outline"></i>
 						</div>
 						<a href="#" class="small-box-footer">View Uploaded Schedules <i class="fa fa-arrow-right"></i></a>
 				    </div>
