@@ -170,6 +170,8 @@ $perc = ($c/$tottal)*100;
 
 	function view_exp()
 	{
+		// ini_set('memory_limit', '-1');
+
 	    if(isset($_GET['viewexp']))
 	    {
 	    	$data['year'] = $_GET['year'];
@@ -184,16 +186,25 @@ $perc = ($c/$tottal)*100;
 	    }
 	    else if(isset($_GET['downloadexp']))
 	    {
+
 	    	$data['period'] = $_GET['year']."-".$_GET['month'];
 
+	    	$file_name = 'PCA_Single_Code_File_'.$data['period'].'.csv'; 
+		    header("Content-Description: File Transfer"); 
+		    header("Content-Disposition: attachment; filename=$file_name"); 
+		    header("Content-Type: application/csv;");
+
 	    	$csv_data = $this->pages->fetch_data($data['period']);
+
+	    	// echo "<pre>"; print_r($csv_data); echo "</pre>"; exit;
 
 	    	// file creation 
 		     $file = fopen('php://output', 'w');
 		 
 		     $header = array("Employeeno", "Vote", "Votename", "Amount", "PayrollDate"); 
 		     fputcsv($file, $header);
-		     foreach ($csv_data->result_array() as $key => $value)
+
+		     foreach ($csv_data as $key=>$value)
 		     { 
 		       fputcsv($file, $value); 
 		     }
