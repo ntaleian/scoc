@@ -35,7 +35,7 @@
 	
     <!--alerts CSS -->
     <link href="<?php echo base_url(); ?>assets/vendor_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
-    
+
     <!-- toast CSS -->
     <link href="<?php echo base_url(); ?>assets/vendor_components/jquery-toast-plugin-master/src/jquery.toast.css" rel="stylesheet">	
 	
@@ -58,11 +58,18 @@
   </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
+
+<!-- Image loader -->
+<div id='loader' style='position: fixed; left: 0; top: 0; z-index: 1000;background: #f0ffff05;width: 100%;height: 100%;'>
+  <img src='<?php echo base_url(); ?>assets/images/spinner.gif' width='200px' height='200px' style="top: 300px;left: 700px;position: fixed;">
+</div>
+<!-- Image loader -->
+
 <div class="wrapper">
 
   <header class="main-header">	
     <!-- Logo -->
-    <a href="index.html" class="logo">
+    <a href="#" class="logo">
       <!-- mini logo -->
 	  <b class="logo-mini">
 		  <!-- <span class="light-logo"><img src="<?php echo base_url(); ?>assets/images/logo-light.png" alt="logo"></span> -->
@@ -71,7 +78,6 @@
       <!-- logo-->
       <span class="logo-lg">
 		  <img src="<?php echo base_url(); ?>assets/images/logo-light-text.png" alt="logo" class="light-logo">
-	  	  <!-- <img src="<?php echo base_url(); ?>assets/images/logo-dark-text.png" alt="logo" class="dark-logo"> -->
 	  </span>
     </a>  	
   	<!-- Sidebar toggle button-->

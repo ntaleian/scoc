@@ -418,6 +418,12 @@ var interval = setInterval(function() {
           });
         </script>
 
+        <script type="text/javascript">
+          $(document).ready(function(){
+            $("#loader").hide();
+          });
+        </script>
+
         
 
 </body>
