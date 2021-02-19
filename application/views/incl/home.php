@@ -8,7 +8,7 @@
 				<div class="col-xl-4 col-md-6 col-12">
 					<div class="small-box pull-up bg-info">
 						<div class="inner">
-						  <h3><?php echo date('M-Y', strtotime($dash['ExpDate'])); ?></h3>
+						  <h3><?php if(!empty($dash['ExpDate'])){ echo date('M-Y', strtotime($dash['ExpDate'])); } else { echo "#N/A"; } ?></h3>
 						  <p>Latest Expectation</p>
 						</div>
 						<div class="icon">
@@ -42,7 +42,7 @@
 				    </div>
 				</div>	
 				
-				<div class="col-xl-12 col-12">
+				<!-- <div class="col-xl-12 col-12">
 					<div class="box">
 						<div class="box-header">
 							<h4 class="box-title"><?php echo date('Y')." Overview"; ?></h4>
@@ -51,7 +51,7 @@
 							<div id="ticketoverview"></div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				
 												
 			</div>			
