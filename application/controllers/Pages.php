@@ -201,7 +201,7 @@ $perc = ($c/$tottal)*100;
 	    	// file creation 
 		     $file = fopen('php://output', 'w');
 		 
-		     $header = array("Employeeno", "Empname", "Vote", "Votename", "Amount", "PayrollDate"); 
+		     $header = array("Employeeno", "Vote", "Votename", "Amount", "PayrollDate"); 
 		     fputcsv($file, $header);
 
 		     foreach ($csv_data as $key=>$value)
