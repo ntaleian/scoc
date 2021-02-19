@@ -101,6 +101,22 @@ class Pages_model extends CI_Model {
 		}
 	}
 
+	function fetch_bd_data($period)
+	{
+		$period = date('Y-m', strtotime($period));
+
+		$get = $this->db->query("SELECT s.empno, s.vote, d.description, s.dedcode, c.companyname, s.amount, s.payrolldate FROM scoc_breakdown AS s LEFT JOIN departments d ON s.vote=d.code LEFT JOIN companies AS c ON s.dedcode=c.deductiontype WHERE s.payrolldate='$period'");
+
+		if($get->num_rows() > 0)
+		{
+			return $get->result_array();
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	
 	function get_expectation()
 	{

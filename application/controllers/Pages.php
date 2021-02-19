@@ -189,27 +189,28 @@ $perc = ($c/$tottal)*100;
 
 	    	$data['period'] = $_GET['year']."-".$_GET['month'];
 
-	    	$file_name = 'PCA_Single_Code_File_'.$data['period'].'.csv'; 
-		    header("Content-Description: File Transfer"); 
-		    header("Content-Disposition: attachment; filename=$file_name"); 
-		    header("Content-Type: application/csv;");
-
 	    	$csv_data = $this->pages->fetch_data($data['period']);
 
-	    	// echo "<pre>"; print_r($csv_data); echo "</pre>"; exit;
+	    	if($csv_data)
+	    	{
+	    		$file_name = 'PCA_Single_Code_File_'.$data['period'].'.csv'; 
+			    header("Content-Description: File Transfer"); 
+			    header("Content-Disposition: attachment; filename=$file_name"); 
+			    header("Content-Type: application/csv;");
 
-	    	// file creation 
-		     $file = fopen('php://output', 'w');
-		 
-		     $header = array("Employeeno", "Vote", "Votename", "Amount", "PayrollDate"); 
-		     fputcsv($file, $header);
+		    	// file creation 
+			     $file = fopen('php://output', 'w');
+			 
+			     $header = array("Employeeno", "Vote", "Votename", "Amount", "PayrollDate"); 
+			     fputcsv($file, $header);
 
-		     foreach ($csv_data as $key=>$value)
-		     { 
-		       fputcsv($file, $value); 
-		     }
-		     fclose($file); 
-		     exit; 
+			     foreach ($csv_data as $key=>$value)
+			     { 
+			       fputcsv($file, $value); 
+			     }
+			     fclose($file); 
+			     exit; 
+	    	}	    	
 	    }
 	    else
 	    {
@@ -223,6 +224,51 @@ $perc = ($c/$tottal)*100;
 		$this->load->view('incl/header');
 		$this->load->view('incl/sidebar', $data);
 		$this->load->view('pages/view_exp', $data);
+		$this->load->view('incl/footer');
+	}
+
+	function view_bdown()
+	{
+		if(isset($_GET['downloadbd']))
+	    {
+
+	    	$data['period'] = $_GET['year']."-".$_GET['month'];
+
+	    	$csv_data = $this->pages->fetch_bd_data($data['period']);
+
+	    	if($csv_data)
+	    	{
+	    		$file_name = 'PCA_Multiple_Code_File_'.$data['period'].'.csv'; 
+			    header("Content-Description: File Transfer"); 
+			    header("Content-Disposition: attachment; filename=$file_name"); 
+			    header("Content-Type: application/csv;");
+
+		    	// file creation 
+			     $file = fopen('php://output', 'w');
+			 
+			     $header = array("Employeeno", "Vote", "Votename", "Dedcode", "Dedname", "Amount", "PayrollDate"); 
+			     fputcsv($file, $header);
+
+			     foreach ($csv_data as $key=>$value)
+			     { 
+			       fputcsv($file, $value); 
+			     }
+			     fclose($file); 
+			     exit; 
+	    	}	    	
+	    }
+	    else
+	    {
+	        // $data['results'] = false;
+	    }
+	    
+		$data['page_title'] = "Download Breakdown Files";
+		$data['section'] = "Expectations";
+		$data['active_link'] = "view_bdown";
+
+		$this->load->view('incl/header');
+		$this->load->view('incl/sidebar', $data);
+		$this->load->view('pages/view_bdown', $data);
 		$this->load->view('incl/footer');
 	}
 

@@ -39,6 +39,12 @@
             <span>View Expectation Files</span>
           </a>
         </li>
+        <li class="<?php if($active_link == 'view_bdown'){ echo 'active'; } else { echo ''; } ?>">
+          <a href="<?php echo base_url() ?>pages/view_bdown">
+            <i class="mdi mdi-file-find"></i>
+            <span>Download Breakdown Files</span>
+          </a>
+        </li>
 
 		
         <li class="header nav-small-cap">PAYMENT SCHEDULES</li>		
