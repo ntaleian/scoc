@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="http://bx-code-admin.websitedesignmarketingagency.com/images/favicon.ico">
+    <link rel="icon" href="<?php echo base_url(); ?>assets/images/favicon.ico">
 
     <title>PCA SCOC - Log in </title>
   
