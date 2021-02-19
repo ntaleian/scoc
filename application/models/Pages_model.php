@@ -10,7 +10,7 @@ class Pages_model extends CI_Model {
 
 	function get_votes()
 	{
-		$get = $this->db->query("SELECT * FROM scoc_departments");
+		$get = $this->db->query("SELECT * FROM departments");
 
 		if($get->num_rows() > 0)
 		{
@@ -66,21 +66,41 @@ class Pages_model extends CI_Model {
 		}
 	}
 	
-	function get_exp_vote($vote, $period)
+	function get_exp_vote($period)
 	{
 	    $period = date('Y-m', strtotime($period));
 	    
-	    $get = $this->db->query("SELECT COUNT(id) AS NoOfEmps, SUM(REPLACE(amount,',','')) AS totalSum FROM scoc_expectation WHERE vote='$vote' AND payrolldate='$period'");
+	    // $get = $this->db->query("SELECT COUNT(id) AS NoOfEmps, SUM(REPLACE(amount,',','')) AS totalSum FROM scoc_expectation WHERE vote='$vote' AND payrolldate='$period'");
+
+	    $get = $this->db->query("SELECT e.vote, d.description, COUNT(e.id) AS NoOfEmps, SUM(e.amount) AS totalSum FROM scoc_expectation as e LEFT JOIN departments as d ON e.vote=d.code WHERE e.payrolldate='$period' GROUP BY e.vote ");
 	    
 	    if($get->num_rows() > 0)
 	    {
-	        return $get->row_array();
+	        return $get->result_array();
 	    }
 	    else
 	    {
 	        return false;
 	    }
 	}
+
+
+	function fetch_data($period)
+	{
+		$period = date('Y-m', strtotime($period));
+
+		$get = $this->db->query("SELECT s.empno, s.vote, d.description, s.amount, s.payrolldate FROM scoc_expectation AS s LEFT JOIN departments d ON s.vote=d.code WHERE s.payrolldate='$period'");
+
+		if($get->num_rows() > 0)
+		{
+			return $get->result_array();
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	
 	function get_expectation()
 	{
@@ -168,8 +188,6 @@ class Pages_model extends CI_Model {
 	        //do recon
 	        $expectations = $getexp->result_array();
 	        
-	       // $bArr = array();
-	        
 	        foreach($expectations as $expect)
 	        {
 	            //get breakdown total
@@ -179,10 +197,6 @@ class Pages_model extends CI_Model {
 	            $totExp = $getTotal->result_array();
 	            
 	            $breakTot = array_sum(array_column($totExp, 'amount'));
-	            
-	           // echo "<pre>"; print_r($totExp); echo "</pre>"; exit;
-	            
-	           // $breakTot = $totExp[0]['totalAmt'];
 	            
 	            //total equals expected
 	           if($breakTot == $expect['amount'])
