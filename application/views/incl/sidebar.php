@@ -47,6 +47,7 @@
         </li>
 
 		
+        <?php if($scoc_user['type'] == 'admin'){ ?>
         <li class="header nav-small-cap">PAYMENT SCHEDULES</li>		
 		
           <li class="<?php if($active_link == 'upload_vs'){ echo 'active'; } else { echo ''; } ?>">
@@ -69,8 +70,9 @@
               <span>View Reconciled Schedules</span>
             </a>
           </li>
+        <?php } ?>
 
-        <?php if($scoc_user['type'] == 'admin'){ ?>
+        <?php //if($scoc_user['type'] == 'admin'){ ?>
           <li class="header nav-small-cap">MANAGEMENT</li>
 
           <li class="<?php if($active_link == 'add_user'){ echo 'active'; } else { echo ''; } ?>">
@@ -87,7 +89,7 @@
             </a>
           </li>
 
-        <?php } ?>
+        <?php //} ?>
         
       </ul>
     </section>

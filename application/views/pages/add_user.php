@@ -26,6 +26,11 @@
 						<label>Username:</label>
 						<input type="text" name="username" class="form-control" placeholder="Enter username">
 					</div>
+
+					<?php 
+						$scoc_user = $this->session->userdata('scoc_user');
+						if($scoc_user['type'] == 'admin'){
+					 ?>
 					<div class="form-group">
 						<label>Select Usertype</label>
 						<select name="type" class="form-control select2" style="width: 100%;">
@@ -34,6 +39,13 @@
                                       <option value="admin">Admin</option>
 						</select>
 					</div>
+					<?php 
+						}
+						else
+						{
+					?>
+					<input type="hidden" name="type" value="normal">
+					<?php } ?>
 					<div class="form-group">
 						<label>Password:</label>							
 						<input type="password" name="password" class="form-control" placeholder="">
@@ -41,7 +53,7 @@
 				</div>
 				<!-- /.box-body -->
 				<div class="box-footer">
-					<button type="submit" name="adduser" value="adduser" class="btn btn-success pull-right">Submit</button>
+					<button type="submit" name="adduser" value="adduser" class="btn btn-success pull-right">Submit</button><br/><br/>
 				</div>
 			</form>
 		  </div>
