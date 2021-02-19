@@ -89,7 +89,7 @@ class Pages_model extends CI_Model {
 	{
 		$period = date('Y-m', strtotime($period));
 
-		$get = $this->db->query("SELECT s.empno, s.vote, d.description, s.amount, s.payrolldate FROM scoc_expectation AS s LEFT JOIN departments d ON s.vote=d.code WHERE s.payrolldate='$period'");
+		$get = $this->db->query("SELECT s.empno, e.firstname, s.vote, d.description, s.amount, s.payrolldate FROM scoc_expectation AS s LEFT JOIN departments d ON s.vote=d.code LEFT JOIN employees e ON s.empno=e.employeenumber WHERE s.payrolldate='$period'");
 
 		if($get->num_rows() > 0)
 		{
