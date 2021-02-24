@@ -60,6 +60,8 @@
 
 	<!-- Bootstrap WYSIHTML5 -->
 	<script src="<?php echo base_url(); ?>assets/vendor_plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js"></script>
+
+  <script src="<?php echo base_url(); ?>assets/js/ajaxfileupload.js"></script>
 		
 	<!-- Bx-code admin App -->
 	<script src="<?php echo base_url(); ?>assets/js/template.js"></script>
@@ -427,6 +429,126 @@ var interval = setInterval(function() {
               $("#loader").show();
             }
 
+        </script>
+
+
+        <script type="text/javascript">
+         jQuery(document).on('submit', '#exp_form', function(e){
+            e.preventDefault();
+            $.ajax({
+              xhr: function(){
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function(element){
+                    if(element.lengthComputable){
+                      var percentComplete = ((element.loaded / element.total) * 100);
+                      $("#file-progress-bar").width(percentComplete + '%');
+                      $("#file-progress-bar").html(percentComplete+'%');
+                    }
+                  }, false);
+
+                return xhr;
+              },
+              type: 'POST',
+              url: "<?php echo base_url(); ?>pages/upload_exp_file",
+              mimeType: "multipart/form-data",
+              data: new FormData(this),
+              contentType: false,
+              cache: false,
+              processData: false,
+              dataType: 'json',
+              beforeSend: function(){
+                $("#file-progress-bar").width('0%');
+              },
+              success: function(response){
+
+                console.log(response);
+
+                if(response['status'] == 'success'){
+                  $('#exp_form')[0].reset();
+                }
+              },
+              error: function(xhr, ajaxOptions, thrownError){
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+              }
+            });
+          });
+
+          // Check File type validation
+          $("#uplfile").change(function(){
+              var allowedTypes = ['text/csv'];
+              var file = this.files[0];
+              var fileType = file.type;
+              var fileName = file.name;
+
+              // if(!allowedTypes.includes(fileType)) {
+              if(fileName.split(".").pop() != 'csv') {
+                  jQuery("#chk-error").html('<small class="text-danger">Please choose a valid CSV file </small>');
+                  $("#uplfile").val('');
+                  return false;
+              } else {
+                jQuery("#chk-error").html('');
+              }
+          }); 
+        </script>
+
+
+        <script type="text/javascript">
+         jQuery(document).on('submit', '#bd_form', function(e){
+            e.preventDefault();
+            $.ajax({
+              xhr: function(){
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function(element){
+                    if(element.lengthComputable){
+                      var percentComplete = ((element.loaded / element.total) * 100);
+                      $("#file-progress-bar").width(percentComplete + '%');
+                      $("#file-progress-bar").html(percentComplete+'%');
+                    }
+                  }, false);
+
+                return xhr;
+              },
+              type: 'POST',
+              url: "<?php echo base_url(); ?>pages/upload_bd_file",
+              mimeType: "multipart/form-data",
+              data: new FormData(this),
+              contentType: false,
+              cache: false,
+              processData: false,
+              dataType: 'json',
+              beforeSend: function(){
+                $("#file-progress-bar").width('0%');
+              },
+              success: function(response){
+
+                console.log(response);
+
+                if(response['status'] == 'success'){
+                  $('#bd_form')[0].reset();
+                }
+              },
+              error: function(xhr, ajaxOptions, thrownError){
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+              }
+            });
+          });
+
+          // Check File type validation
+          $("#uplfile2").change(function(){
+              var allowedTypes = ['text/csv'];
+              var file = this.files[0];
+              var fileType = file.type;
+              var fileName = file.name;
+
+              // if(!allowedTypes.includes(fileType)) {
+              if(fileName.split(".").pop() != 'csv') {
+                  jQuery("#chk-error").html('<small class="text-danger">Please choose a valid CSV file </small>');
+                  $("#uplfile2").val('');
+                  return false;
+              } else {
+                jQuery("#chk-error").html('');
+              }
+          }); 
         </script>
 
         

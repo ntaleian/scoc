@@ -89,7 +89,7 @@ class Pages_model extends CI_Model {
 	{
 		$period = date('Y-m', strtotime($period));
 
-		$get = $this->db->query("SELECT s.empno, s.vote, d.description, s.amount, s.payrolldate FROM scoc_expectation AS s LEFT JOIN departments d ON s.vote=d.code WHERE s.payrolldate='$period'");
+		$get = $this->db->query("SELECT e.employeenumber, e.firstname, s.vote, d.description, s.amount, s.payrolldate FROM scoc_expectation AS s LEFT JOIN employees AS e ON s.empid=e.id LEFT JOIN departments d ON s.vote=d.code WHERE s.payrolldate='$period'");
 
 		if($get->num_rows() > 0)
 		{
@@ -105,7 +105,7 @@ class Pages_model extends CI_Model {
 	{
 		$period = date('Y-m', strtotime($period));
 
-		$get = $this->db->query("SELECT s.empno, s.vote, d.description, s.dedcode, c.companyname, s.amount, s.payrolldate FROM scoc_breakdown AS s LEFT JOIN departments d ON s.vote=d.code LEFT JOIN companies AS c ON s.dedcode=c.deductiontype WHERE s.payrolldate='$period'");
+		$get = $this->db->query("SELECT e.employeenumber, e.firstname, s.vote, d.description, s.dedcode, c.companyname, s.amount, s.payrolldate FROM scoc_breakdown AS s LEFT JOIN employees e ON s.empid=e.id LEFT JOIN departments d ON s.vote=d.code LEFT JOIN companies AS c ON s.dedcode=c.deductiontype WHERE s.payrolldate='$period'");
 
 		if($get->num_rows() > 0)
 		{
@@ -347,6 +347,60 @@ class Pages_model extends CI_Model {
 		{
 			return false;
 		}
+	}
+
+	function insert_exp_file($filename, $period)
+	{
+		$file_path = FCPATH."/uploads/expectation/".$filename; //It should always be set to FCPATH to make sure that the path is absolute
+		$new_path = str_replace("\\", "/", $file_path);
+
+		$query_name = "LOAD DATA LOCAL INFILE '"
+            . $new_path . 
+            "' INTO TABLE `scoc_expectation`
+	        FIELDS TERMINATED by ','
+	        LINES TERMINATED BY '\\n'
+			IGNORE 1 LINES
+			(empid, vote, amount)
+			SET payrolldate='".$period."', dateuploaded=CURRENT_TIMESTAMP,status='1',uploadedby='1', empname=''
+              ";
+
+        $insert = $this->db->query($query_name);
+
+        if($insert)
+        {
+        	return true;
+        }
+        else
+        {
+        	return false;
+        }
+	}
+
+	function insert_bd_file($filename, $period)
+	{
+		$file_path = FCPATH."/uploads/breakdown/".$filename; //It should always be set to FCPATH to make sure that the path is absolute
+		$new_path = str_replace("\\", "/", $file_path);
+
+		$query_name = "LOAD DATA LOCAL INFILE '"
+            . $new_path . 
+            "' INTO TABLE `scoc_breakdown`
+	        FIELDS TERMINATED by ','
+	        LINES TERMINATED BY '\\n'
+			IGNORE 1 LINES
+			(empid, vote, dedcode, amount)
+			SET payrolldate='".$period."', dateuploaded=CURRENT_TIMESTAMP,status='1',uploadedby='1', empname=''
+              ";
+
+        $insert = $this->db->query($query_name);
+
+        if($insert)
+        {
+        	return true;
+        }
+        else
+        {
+        	return false;
+        }
 	}
 
 }

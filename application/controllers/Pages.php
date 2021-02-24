@@ -37,11 +37,66 @@ class Pages extends CI_Controller {
 		$this->load->view('pages/upload_exp', $data);
 		$this->load->view('incl/footer');
 	}
+
+	function upload_exp_file()
+	{
+		$status = "";
+		$msg = "";
+		$fileData = $_FILES;
+		$file_element_name = 'uplfile';
+
+		$filename = $_FILES[$file_element_name]['name'];
+
+		$year = $_POST['year']; $month = $_POST['month'];
+		$period = $year."-".$month;
+		$period = date('Y-m', strtotime($period));
+
+		$config['upload_path'] = './uploads/expectation';
+		$config['allowed_types'] = "csv";
+		$config['max_size'] = 5120000;
+		// $config['encrypt_name'] = TRUE;
+		$config['overwrite'] = TRUE;
+		$config['file_name'] = $_FILES[$file_element_name]['name'];
+
+		$this->load->library('upload', $config);
+		$this->upload->initialize($config);
+
+		if(!$this->upload->do_upload($file_element_name))
+		{
+			$status = 'error';
+			$msg = $this->upload->display_errors('', '');
+		}
+		else
+		{
+			$upload_data = $this->upload->data();
+
+			if($upload_data)
+			{
+				$insertFile = $this->pages->insert_exp_file($filename, $period);
+
+				$status = "success";
+				$msg = "File successfully uploaded";
+			}
+			else
+			{
+				unlink($upload_data['full_path']);
+				$status = "error";
+				$msg = "Something wrong";
+			}
+		}
+
+		@unlink($_FILES[$file_element_name]);
+
+		echo json_encode(array('status' => $status, 'msg' => $msg, 'fileData' => $filename));
+	}
+
+
+
 	
 		function saveupload_exp()
 	{
 	    
-  write_file('./myfile.txt', "Uploading....");
+  		write_file('./myfile.txt', "Uploading....");
 
 
 		$data['page_title'] = "Upload Expectation";
@@ -51,9 +106,9 @@ class Pages extends CI_Controller {
 	
 			$file = $_FILES['file']['tmp_name'];
 			$handle = fopen($file, "r");
-$fp = file($file);
+			$fp = file($file);
 
-$tottal = count($fp);
+			$tottal = count($fp);
 
 			$c = 0;//
 			while(($filesop = fgetcsv($handle, 1000, ",")) !== false)
@@ -75,21 +130,21 @@ $tottal = count($fp);
 
 				}
 				$c = $c + 1;
-$perc = ($c/$tottal)*100;
+		$perc = ($c/$tottal)*100;
 
-  write_file('./myfile.txt', "Uploading ".$c." of ".$tottal);
-    
-			}
-	
-	//var_dump($data);
-					$this->pages->saveexpectation($dat);
+		  write_file('./myfile.txt', "Uploading ".$c." of ".$tottal);
+		    
+					}
+			
+			//var_dump($data);
+							$this->pages->saveexpectation($dat);
 
- $output = array(
-   'success'  => true,
-   'total_line' => ($tottal - 1)
-  );
-  
-   echo json_encode($output);
+		 $output = array(
+		   'success'  => true,
+		   'total_line' => ($tottal - 1)
+		  );
+		  
+		   echo json_encode($output);
 
        // redirect('/pages/view_exp');
 	}
@@ -106,6 +161,58 @@ $perc = ($c/$tottal)*100;
 		$this->load->view('incl/sidebar', $data);
 		$this->load->view('pages/upload_bdown', $data);
 		$this->load->view('incl/footer');
+	}
+
+	function upload_bd_file()
+	{
+		$status = "";
+		$msg = "";
+		$fileData = $_FILES;
+		$file_element_name = 'uplfile2';
+
+		$filename = $_FILES[$file_element_name]['name'];
+
+		$year = $_POST['year']; $month = $_POST['month'];
+		$period = $year."-".$month;
+		$period = date('Y-m', strtotime($period));
+
+		$config['upload_path'] = './uploads/breakdown';
+		$config['allowed_types'] = "csv";
+		$config['max_size'] = 5120000;
+		// $config['encrypt_name'] = TRUE;
+		$config['overwrite'] = TRUE;
+		$config['file_name'] = $_FILES[$file_element_name]['name'];
+
+		$this->load->library('upload', $config);
+		$this->upload->initialize($config);
+
+		if(!$this->upload->do_upload($file_element_name))
+		{
+			$status = 'error';
+			$msg = $this->upload->display_errors('', '');
+		}
+		else
+		{
+			$upload_data = $this->upload->data();
+
+			if($upload_data)
+			{
+				$insertFile = $this->pages->insert_bd_file($filename, $period);
+
+				$status = "success";
+				$msg = "File successfully uploaded";
+			}
+			else
+			{
+				unlink($upload_data['full_path']);
+				$status = "error";
+				$msg = "Something wrong";
+			}
+		}
+
+		@unlink($_FILES[$file_element_name]);
+
+		echo json_encode(array('status' => $status, 'msg' => $msg, 'fileData' => $filename));
 	}
 
 
@@ -201,7 +308,7 @@ $perc = ($c/$tottal)*100;
 		    	// file creation 
 			     $file = fopen('php://output', 'w');
 			 
-			     $header = array("Employeeno", "Vote", "Votename", "Amount", "PayrollDate"); 
+			     $header = array("Employeeno", "Employeename", "Vote", "Votename", "Amount", "PayrollDate"); 
 			     fputcsv($file, $header);
 
 			     foreach ($csv_data as $key=>$value)
@@ -246,7 +353,7 @@ $perc = ($c/$tottal)*100;
 		    	// file creation 
 			     $file = fopen('php://output', 'w');
 			 
-			     $header = array("Employeeno", "Vote", "Votename", "Dedcode", "Dedname", "Amount", "PayrollDate"); 
+			     $header = array("Employeeno", "Employeename", "Vote", "Votename", "Dedcode", "Dedname", "Amount", "PayrollDate"); 
 			     fputcsv($file, $header);
 
 			     foreach ($csv_data as $key=>$value)
@@ -532,10 +639,12 @@ $perc = ($c/$tottal)*100;
 	
 	function seedate()
 	{
-	    $date = '2012-2';
-	    $newdate = date('Y-m-d', strtotime($date));
+	    // $date = '2012-2';
+	    // $newdate = date('Y-m-d', strtotime($date));
 	    
-	    echo $newdate;
+	    // echo $newdate;
+
+	    echo FCPATH;
 	}
 
 }
