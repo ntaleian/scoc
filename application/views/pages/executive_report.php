@@ -32,7 +32,7 @@
 				        </div>	
 
 				        <div class="col-xl-3 col-md-6 col-12 ">
-				          	<div class="box bg-success">
+				          	<div class="box bg-pink">
 				              <div class="box-body">
 				                <div class="flexbox">
 				                  <h5>New Reservations</h5>
@@ -53,7 +53,7 @@
 				        </div>
 
 				        <div class="col-xl-3 col-md-6 col-12 ">
-				          	<div class="box bg-warning">
+				          	<div class="box bg-success">
 				              <div class="box-body">
 				                <div class="flexbox">
 				                  <h5>Topup Reservations</h5>
