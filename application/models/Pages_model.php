@@ -419,6 +419,20 @@ class Pages_model extends CI_Model {
 		}
 	}
 
+	function get_exec_votes()
+	{
+		$get = $this->db->query("SELECT e.department, f.description, COUNT(d.id) AS dedsID, SUM(d.installmentamount) AS dedsAmt FROM deductions d LEFT JOIN employees e ON d.employeeid=e.id LEFT JOIN departments f ON e.department=f.code WHERE d.`status`='reserved' AND d.isactive='Y' GROUP BY e.department ORDER BY dedsID DESC");
+
+		if($get->num_rows() > 0)
+		{
+			return $get->result_array();
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 }
 
 ?>

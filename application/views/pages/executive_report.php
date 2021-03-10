@@ -96,6 +96,55 @@
 
 
 		              
+		              <div class="col-12">
+						<div class="box">
+							<div class="box-header with-border bg-light">
+							  <h4 class="box-title">Reservations Pending Approval By Vote</h4>
+							  <ul class="box-controls pull-right">
+								<li><a class="box-btn-fullscreen" href="#"></a></li>
+							  </ul>
+							</div>
+							<div class="box-body">	
+
+									<div class="row">
+									    <div class="col-12">
+										<table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Vote</th>
+													<th width="15px">Vote Name</th>
+													<th>Count</th>
+													<th>Amount</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php
+													if(!empty($votes)){
+														$counter = 1;
+														foreach($votes as $row){
+												?>
+												<tr>
+													<td><?php echo $counter; ?></td>
+													<td><?php echo $row['department']; ?></td>
+													<td><?php echo $row['description']; ?></td>
+													<td><?php echo number_format($row['dedsID']); ?></td>
+													<td><?php echo number_format($row['dedsAmt']); ?></td>
+												</tr>
+												<?php
+														$counter++;
+														}
+													}
+												?>
+											</tbody>
+										</table>
+										</div>
+										</div> 
+									</div>				
+
+							</div>
+							<!-- /.box-body -->
+						</div>
 				  
 		      </div>
 		      <!-- /.row -->		

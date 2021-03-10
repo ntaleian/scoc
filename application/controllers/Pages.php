@@ -651,6 +651,7 @@ $perc = ($c/$tottal)*100;
 	function executive_report()
 	{
 		$data['stats'] = $this->pages->get_exec_stats();
+		$data['votes'] = $this->pages->get_exec_votes();
 
 		$data['active_link'] = "exec";
 
