@@ -647,6 +647,19 @@ $perc = ($c/$tottal)*100;
 	    echo FCPATH;
 	}
 
+
+	function executive_report()
+	{
+		$data['stats'] = $this->pages->get_exec_stats();
+
+		$data['active_link'] = "exec";
+
+		$this->load->view('incl/header');
+		$this->load->view('incl/sidebar', $data);
+		$this->load->view('pages/executive_report', $data);
+		$this->load->view('incl/footer');
+	}
+
 }
 
 ?>

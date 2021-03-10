@@ -53,7 +53,7 @@
 								</div>
 
 								<div class="col-md-4 col-12">
-									<button type="submit" name="downloadbd" value="downloadbd" class="btn btn-default" onclick="showLoader();"><i class="fa fa-download"></i>&nbsp; Download </button>
+									<button type="submit" name="downloadbd" value="downloadbd" class="btn btn-default"><i class="fa fa-download"></i>&nbsp; Download </button>
 								</div>
 
 								<br/><br/>

@@ -17,6 +17,13 @@
           </a>
         </li>
 
+        <li class="<?php if($active_link == 'exec'){ echo 'active'; } else { echo ''; } ?>">
+          <a href="<?php echo base_url(); ?>pages/executive_report">
+            <i class="mdi mdi-chart-arc"></i>
+            <span>Executive Report</span>
+          </a>
+        </li>
+
 		<li class="header nav-small-cap">EXPECTATION FILES</li> 
       <?php if($scoc_user['type'] == 'admin'){ ?>
         <li class="<?php if($active_link == 'upload_exp'){ echo 'active'; } else { echo ''; } ?>">

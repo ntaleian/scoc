@@ -164,7 +164,7 @@ class Pages_model extends CI_Model {
 	
 	function get_popup_exp_reports($vote, $period)
 	{
-	    $query = $this->db->query("SELECT s.empno, s.vote, s.payrolldate, s.amount, d.description FROM `scoc_expectation` s LEFT JOIN scoc_departments d ON s.vote=d.code WHERE s.vote='$vote' AND s.payrolldate='$period'");
+	    $query = $this->db->query("SELECT e.employeenumber, e.firstname, s.vote, s.payrolldate, s.amount, d.description FROM `scoc_expectation` s LEFT JOIN employees e ON s.empid=e.id LEFT JOIN scoc_departments d ON s.vote=d.code WHERE s.vote='$vote' AND s.payrolldate='$period'");
 	    
 	    if($query->num_rows() > 0)
 	    {
@@ -401,6 +401,22 @@ class Pages_model extends CI_Model {
         {
         	return false;
         }
+	}
+
+	function get_exec_stats()
+	{
+		 // echo "SELECT (SELECT COUNT(id) FROM deductions WHERE status='reserved' AND isactive='Y' AND (is_bank_res IS NULL OR is_bank_res!='Y') AND rep_status!='Pending_approval') AS resNo FROM deductions"; exit;
+
+		$get = $this->db->query("SELECT DISTINCT (SELECT COUNT(id) FROM deductions WHERE status='reserved' AND isactive='Y' AND (is_bank_res IS NULL OR is_bank_res!='Y') AND rep_status!='Pending_approval') AS resNo, (SELECT SUM(installmentamount) FROM deductions WHERE status='reserved' AND isactive='Y' AND (is_bank_res IS NULL OR is_bank_res!='Y') AND rep_status!='Pending_approval') AS resTtl, (SELECT COUNT(id) FROM deductions WHERE status='takenup' AND isactive='Y' ) AS dedsNo, (SELECT SUM(installmentamount) FROM deductions WHERE status='takenup' AND isactive='Y' ) AS dedsTtl, (SELECT COUNT(id) FROM deductions WHERE status='reserved' AND isactive='Y' AND (is_bank_res IS NULL OR is_bank_res!='Y') AND rep_status='Pending_approval') AS topResNo, (SELECT SUM(installmentamount) FROM deductions WHERE status='reserved' AND isactive='Y' AND (is_bank_res IS NULL OR is_bank_res!='Y') AND rep_status='Pending_approval') AS topResTtl, (SELECT COUNT(t.id) from trail t where t.category='Login' AND DATE(t.date_created)=CURDATE()) AS uLogs, (SELECT COUNT(id) FROM users WHERE isactive='Y') AS users FROM deductions");
+
+		if($get->num_rows() > 0)
+		{
+			return $get->row_array();
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 }

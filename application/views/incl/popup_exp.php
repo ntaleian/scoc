@@ -48,6 +48,7 @@
 									<thead>
 										<tr>
 											<th>Empno</th>
+											<th>Emp Name</th>
 											<th>Vote Code</th>
 											<th>Vote Name</th>
 											<th>Amount</th>
@@ -63,7 +64,8 @@
 									            {
 									    ?>
 										<tr>
-										    <td><?php echo str_pad($row['empno'], 15, '0', STR_PAD_LEFT); ?></td>
+										    <td><?php echo str_pad($row['employeenumber'], 15, '0', STR_PAD_LEFT); ?></td>
+										    <td><?php echo $row['firstname']; ?></td>
 											<td><?php echo str_pad($row['vote'], 3, '0', STR_PAD_LEFT); ?></td>
 											<td><?php echo $row['description']; ?></td>
 											<td><?php echo number_format(str_replace(',','',$row['amount'])); ?></td>
