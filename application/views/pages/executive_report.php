@@ -77,18 +77,18 @@
 				          	<div class="box bg-purple">
 				              <div class="box-body">
 				                <div class="flexbox">
-				                  <h5>User Logins</h5>
+				                  <h5>Deduction Code Holders</h5>
 				                </div>
 
 				                <div class="text-center my-2">
-				                  <div class="font-size-60 text-red"><?php echo number_format($stats['uLogs']); ?></div>
-				                  <span class="text-white">Logins</span>
+				                  <div class="font-size-60 text-red"><?php echo number_format($stats['activeCos']); ?></div>
+				                  <span class="text-white">Active Holders</span>
 				                </div>
 				              </div>
 
 				              <div class="box-body bg-gray-light py-12">
-				                <span class="text-muted mr-1">Total Active Users:</span>
-				                <span class="text-dark"><?php echo number_format($stats['users']); ?></span>
+				                <span class="text-muted mr-1">Total Code Holders:</span>
+				                <span class="text-dark"><?php echo number_format($stats['totalCos']); ?></span>
 				              </div>
 
 				            </div>
