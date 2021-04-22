@@ -8,7 +8,11 @@
 				<div class="col-xl-4 col-md-6 col-12">
 					<div class="small-box pull-up bg-info">
 						<div class="inner">
-						  <h3><?php if(!empty($dash['ExpDate'])){ echo date('M-Y', strtotime($dash['ExpDate'])); } else { echo "#N/A"; } ?></h3>
+						  <?php
+						  		$expqry = $this->db->query("SELECT MAX(s.payrolldate) AS pdate FROM scoc_breakdown s");
+						  		$expdate = $expqry->row_array()['pdate'];
+						  ?>
+						  <h3><?php if(!empty($expdate)){ echo date('M-Y', strtotime($expdate)); } else { echo "#N/A"; } ?></h3>
 						  <p>Latest Expectation</p>
 						</div>
 						<div class="icon">
